@@ -1,0 +1,122 @@
+\documentclass[11pt]{article}
+
+% ======================
+% Packages
+% ======================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+% ======================
+% Page Layout
+% ======================
+\geometry{a4paper, margin=1in}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
+
+% ======================
+% Colors & Code Styling
+% ======================
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\small,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+% ======================
+% Theorem-like Environments
+% ======================
+\newtheorem{problem}{Problem}
+\newtheorem{subproblem}{Subproblem}[problem]
+\newtheorem{solution}{Solution}[problem]
+
+% ======================
+% Title Info
+% ======================
+\title{\textbf{Fundamental Algorithm Techniques} \\ Problem Set \#1}
+%\author{Your Name \\ Student ID: 12345678}
+\date{Due: October 4, 2025}
+
+% ======================
+% Document
+% ======================
+\begin{document}
+
+\maketitle
+
+\begin{problem}[Simplest Divide and Conquer on Sparse Vector]
+
+  Consider a sparse vector of size n with only 0's and a single 1:
+  \[
+    v = [0,0,\dots,1,\dots,0]
+  \]
+  \begin{enumerate}[label=(\alph*)]
+    \item Write pseudo recursive code that perform {\bf just} the binary divide and conquer method without creating a copy of the vector and runs until vector fully decomposed into sizes 1. 
+    \begin{itemize}
+        \item function divide(v , .., 2) 
+        \item function divide(v, .., m) for any $2 \ll m$  
+    \end{itemize}
+    \item Analyse complexity of above divide and conquer: m=2, m=3,... tertiary division, which $T(n)$ and which $\mathcal{O}$?
+    \item Next, once the division has reach sizes of 1, we collect the unique 1 and its position. 
+    \begin{itemize}
+        \item Evaluate the cost $f(n)$
+        \item What is the recurrence relation $T(n)$
+        \item is complexity now $\mathcal{O}(log(n))$ or $\mathcal{O}(n)$ (use master Theorem)
+    \end{itemize}
+    %\item  Compare with simpler approach: run over all indices...
+  \end{enumerate}
+\end{problem}
+
+
+\begin{problem}[Multiplication in basis 10]
+    Similar to Paesant multiplication, but in basis 10. it is just the first multiplication you learned at school.
+
+    represent x, y in $\mathbb{N}^+$ with the vectors/arrays $X$ and $Y$, such that\\
+    $x = \sum_{i=0}^{n_x} X[i]\cdot 10^i$, $y =\sum_{j=0}^{n_y} Y[j] \cdot 10^j$.
+
+  \begin{enumerate}
+      \item write a working multiplication code
+      \item tweak code such that  results can be larger than the limit of your standard integer
+      %\item what is the time complexity of your code?
+      \item Explain how above multiplication can be described with the divide and conquer recursion to find $T(n)\approx4T(\frac{n}{2})$ or Karatsuba algorithm: $T(n)\approx3T(\frac{n}{2})$, finding with Master Theorem resp. $\mathcal{O}(n^2)$ and $\mathcal{O}(n^{1.585})$ {\bf hard} \\
+
+    Hint 1: $x \cdot y = \left( x_1 \cdot 10^{n/2} + x_0 \right) \left( y_1 \cdot 10^{n/2} + y_0 \right)$ \\
+    Hint 2: $x \cdot y = z_2 \cdot 10^{n} + z_1 \cdot 10^{n/2} + z_0$
+      
+      \item $\sum_{i=1}^n i$ or $n+ n-1 + \dots + 2 + 1$ can be computed by one application of school multiplication: $n! = \frac{1}{2} mult(v, w)$ with which v, w? {\bf hard } but simple math...
+  \end{enumerate}
+\end{problem}
+
+
+
+
+\end{document}
