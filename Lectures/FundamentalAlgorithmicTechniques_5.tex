@@ -1,0 +1,407 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{url}
+\usepackage{amsmath, amssymb, amsthm}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{lmodern}
+\usepackage{natbib}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{graphicx} % Allows including images
+\graphicspath{ {./images/} }
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+\usetikzlibrary{mindmap, trees, shadows, shapes, calc, fadings, positioning, decorations.pathreplacing, intersections, shapes, arrows}
+
+%\usetheme{Hannover}
+%\usecolortheme{spruce}
+% EPIC FAIL
+\usetheme{default}
+%\usecolortheme{beetle}
+\usepackage{graphics}
+
+\usepackage{color}
+\definecolor{new_turquoise}{RGB}{40,151,158}%{251,190,94}
+\setbeamercolor{title}{fg=new_turquoise}
+
+
+%\usepackage[colorlinks=true, urlcolor=blue, linkcolor=red]{hyperref}
+
+
+\makeatletter
+\setbeamertemplate{frametitle}{
+    \ifbeamercolorempty[bg]{frametitle}{}{\nointerlineskip}%
+    \@tempdima=\textwidth%
+    \advance\@tempdima by\beamer@leftmargin%
+    \advance\@tempdima by\beamer@rightmargin%
+    \vspace*{0.8cm} 
+    %\hspace*{-3cm}
+    %%%%%%%%%%%%% For example insert shift to right
+    \begin{beamercolorbox}[sep=0.3cm,center,wd=\the\@tempdima]{frametitle}
+        \usebeamerfont{frametitle}%
+        \vbox{}\vskip-1ex%
+        \if@tempswa\else\csname beamer@ftecenter\endcsname\fi%
+        \strut\insertframetitle\strut\par%
+        {%
+            \ifx\insertframesubtitle\@empty%
+            \else%
+            {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle\strut\par}%
+            \fi
+        }%
+        \vskip-1ex%
+        \if@tempswa\else\vskip-.3cm\fi% set inside beamercolorbox... evil here...
+    \end{beamercolorbox}%
+}
+\makeatother
+
+\setbeamercolor{frametitle}{fg=new_turquoise}
+\setbeamertemplate{itemize item}{\color{new_turquoise}$\blacksquare$}
+\setbeamertemplate{itemize subitem}{\color{new_turquoise}$\blacksquare$}
+
+
+% --- ENUMERATE ITEMS ---
+\setbeamertemplate{enumerate item}{\color{new_turquoise}\insertenumlabel}
+\setbeamertemplate{enumerate subitem}{\color{new_turquoise}\insertsubenumlabel}
+
+\setbeamertemplate{caption}{\raggedright\insertcaption\par}
+
+% --- COLOR THE TABLE OF CONTENTS ENTRIES ---
+\setbeamercolor{section in toc}{fg=new_turquoise}
+\setbeamercolor{subsection in toc}{fg=new_turquoise}
+\setbeamercolor{subsubsection in toc}{fg=new_turquoise}
+
+
+
+\usebackgroundtemplate{
+    \includegraphics[width=\paperwidth,height=\paperheight]{figs/slide-title.jpg}
+} 
+
+\title{\fontsize{49}{7.2}{\bf Fundamental Algorithmic Techniques V}}
+%\author{JW}
+\date{\color{new_turquoise}\today}
+%S\titlegraphic{\includegraphics[width=2cm]{figs/jw.png}}
+
+\begin{document}
+\frame{\titlepage}
+%% SLIDE 1 - INTRO TO THE TEAM
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usebackgroundtemplate{
+    \includegraphics[width=\paperwidth,height=\paperheight]{figs/slide-pages}
+} 
+
+
+\setbeamertemplate{subsection in toc}{
+    \color{new_turquoise}$\blacksquare$\color{black}~~\inserttocsubsection
+}
+
+
+% Outline frame
+\begin{frame}{Outline}
+    \tableofcontents
+\end{frame}
+
+
+
+\section{Dynamic Programming}
+
+\begin{frame}
+    \frametitle{Fibonacci and Memoization}
+    \scriptsize % Slightly larger than \tiny for readability
+    
+    \begin{columns}[T] % Align tops of columns
+        \begin{column}{0.5\textwidth}
+            \scriptsize
+            % Top: Memoized / Bottom-up DP version
+            Memoized $\mathcal{O}(n)$, space $O(n)$
+            \begin{algorithmic}[1]
+                \Function{IterFibo1}{$n$}
+                    \State $F[0] \gets 0$
+                    \State $F[1] \gets 1$
+                    \For{$i = 2$ to $n$}
+                        \State $F[i] \gets F[i-1] + F[i-2]$
+                    \EndFor
+                    \State \Return $F[n]$
+                \EndFunction
+            \end{algorithmic}
+            
+            \vspace{0.5em}
+            Bottom-up $\mathcal{O}(n)$, space $O(1)$
+            \begin{algorithmic}[1]
+                \Function{IterFibo2}{$n$}
+                    \State $\text{prev} \gets 1$
+                    \State $\text{curr} \gets 0$
+                    \For{$i = 1$ to $n$}
+                        \State $\text{next} \gets \text{curr} + \text{prev}$
+                        \State $\text{prev} \gets \text{curr}$
+                        \State $\text{curr} \gets \text{next}$
+                    \EndFor
+                    \State \Return $\text{curr}$
+                \EndFunction
+            \end{algorithmic}
+        \end{column}
+
+        \begin{column}{0.5\textwidth}
+            \begin{figure}
+                \centering
+                \includegraphics[width=0.8\linewidth]{Algos_figs/Fibonacci_dynamic.png}
+                % \caption{Fibonacci}
+            \end{figure}
+            \scriptsize 
+            Matrix iteration $\mathcal{O}(\log n)$ (rep. squaring)
+            \[
+            \begin{bmatrix}
+                F_{n+1} \\
+                F_{n}
+            \end{bmatrix}
+            =
+            \begin{bmatrix}
+                1 & 1 \\
+                1 & 0
+            \end{bmatrix}^{\!n}
+            \begin{bmatrix}
+                1 \\
+                0
+            \end{bmatrix}
+            \]
+            Fibonacci identities:
+            \[
+            F_{2n} = ... = F_n (2F_{n-1} + F_n) 
+            \]
+            \[
+            F_{2n-1} = ... = F_{n-1} + F_n^2
+            \]
+        \end{column}
+    \end{columns}
+\end{frame}
+
+
+
+\begin{frame}{Edit Distances}
+    compare s1, s2 with operations (cost 1):
+
+    \begin{enumerate}
+        \item insert
+        \item remove
+        \item replace
+    \end{enumerate}
+    \medskip
+
+    {\bf Naive Algo:} example of overlappings!
+    \begin{enumerate}
+        \item Last character of $s_1$, $s_2$ are same: $\mathrm{ED}(s_1, s_2, m, n) = \mathrm{ED}(s_1, s_2, m-1, n-1)$
+        \item $\begin{aligned}[t]
+            \mathrm{ED}(s_1, s_2, m, n) = 1 + \min\big( 
+            &\mathrm{ED}(s_1, s_2, m, n-1), \\
+            &\mathrm{ED}(s_1, s_2, m-1, n), \\
+            &\mathrm{ED}(s_1, s_2, m-1, n-1) \big)
+        \end{aligned}$
+    \end{enumerate}
+
+   
+
+    time complexity: $\mathcal{O}(\mathbb(3)^{n_1+n_2})$ and $\mathcal{O}(n_1 \cdot n_2)$
+
+\end{frame}
+
+
+\begin{frame}{Edit Distances : Memoisation}
+
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.8\linewidth]{Algos_figs/EditDistance.png}
+    \end{figure}
+    
+    {\bf Memoization Strategies:}
+    \begin{itemize}
+        \item Top-Down ED {\bf Memoisation} - $\mathcal{O}(m\cdot n)$ time and $\mathcal{O}(m\cdot n)$ space
+        \item Bottom-Up ED {\bf Tabulation} - $\mathcal{O}(m\cdot n)$ time and $O(m\cdot n)$ space 
+    \end{itemize} 
+
+\end{frame}
+
+
+\begin{frame}{Edit Distances : Tabulation}
+
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.8\linewidth]{Algos_figs/edit_tabulation.png}
+    \end{figure}
+    Costs with: insert, remove, replace \\
+
+    Result bottom right! \\
+    \smallskip
+    Other name:  {\bf Levenshtein Distance}
+
+\end{frame}
+
+
+\section{Optimal Substructure}
+
+\begin{frame}
+    \frametitle{Optimal Substructure}
+    {\it Optimal substructure} if an optimal solution constructed from optimal solutions of its subproblems. \\
+    {\bf Examples:} 
+    \begin{itemize}
+        \item  shortest path on road or graph 
+        \item Fibonacci: $F(n) = F(n) + F(n-1)$
+        \item rod sold at prices for subsets
+    \end{itemize}
+    {\bf Counterexamples:}
+    \begin{itemize}
+        \item shortest path on a Graph without passing twice same node
+    \end{itemize}
+
+    If optimal Substructure, you can write:
+    $$OPT(n) = min(OPT(n-1), OPT(n-2), ...) + f(n)$$
+    Dynamical Programming $\Leftrightarrow$ Optimal Substructures
+
+\end{frame}
+
+\section{Overlapping Subproblems}
+
+\begin{frame}
+    \frametitle{Overlapping Subproblems}
+     {\bf overlapping subproblems} if
+    the same subproblem is solved multiple time
+    Classic examples: 
+    \begin{enumerate}
+        \item Fibonacci numbers
+        \item shortest paths
+        \item knapsack problem
+        \item edit distance.
+    \end{enumerate}
+    \bigskip
+    \bigskip
+
+    Overlapping Subproblems $\Leftrightarrow$ memoization/tabulation/others! \\
+
+    No Overlapping $\Leftrightarrow$ No Dynamic Programming!
+
+ 
+\end{frame}
+
+
+
+\begin{frame}{0/1 Knapsack Problem}
+    \begin{columns}[T] % align columns at top
+        \begin{column}{0.65\textwidth}
+	    \begin{itemize}
+	        \item A knapsack with integer capacity $W > 0$,
+                \item $n$ items, where item $i$ has:
+                \begin{itemize}
+                    \item weight $w_i \in \mathbb{Z}^+$,
+                    \item value $v_i \in \mathbb{R}^+$.
+                \end{itemize}
+	    \end{itemize}
+            Each item may be taken at most once. \\
+            Goal: Maximize total value, weight $\leq W$!
+        \end{column}
+        
+        \begin{column}{0.35\textwidth}
+            \centering
+            \includegraphics[width=\linewidth]{Algos_figs/Knapsack.png}
+        \end{column}
+    \end{columns} 
+
+    \medskip
+
+
+    \begin{itemize}
+        \item Overlapping subproblems \& Optimal Substructure \\
+        Idea: $ks[i][w] = $ maximum value achievable using the first $i$ items with capacity $w$,
+
+        \item Dynamic programming applies! \\
+        complex problem: solvable by simple bottom up tabulation
+    \end{itemize}
+    \tiny
+    Iteration:
+    \[
+    \text{ks}[i][w] = 
+    \begin{cases}
+        \text{ks}[i-1][w], & \text{if } w_i > w, \\
+        \max\Big( 
+        \text{ks}[i-1][w],\ 
+        \text{ks}[i-1][w - w_i] + v_i 
+        \Big), & \text{if } w_i \leq w.
+    \end{cases}
+    \]
+\end{frame}
+
+
+%\begin{frame}{0/1 Knapsack: Algo}
+%{\bf Algorithm: Bottom-Up Tabulation}
+%\begin{verbatim}
+%ks = [[0]*(W+1) for _ in range(n+1)]
+%for i in range(1, n+1):
+%    for w in range(0, W+1):
+%        if w_i > w:
+%            ks[i][w] = ks[i-1][w]
+%        else:
+%            ks[i][w] = max(ks[i-1][w], 
+%                           ks[i-1][w - w_i] + v_i)
+%return ks[n][W]
+%\end{verbatim}
+%[leftmargin=*]
+%\begin{itemize}
+%    \item \textbf{Time complexity}: $O(nW)$
+%    \item \textbf{Space complexity}: $O(nW)$ (optimizable to $O(W)$)
+%\end{itemize}
+
+%{\bf Optimisation:}
+%\begin{verbatim}
+%    for i in range(n):
+%        for w in range(W, w_i-1, -1):
+%            ks[w] = max(ks[w], ks[w - w_i] + v_i)
+%\end{verbatim}
+
+
+
+\begin{frame}
+    \frametitle{0/1 Knapsack by Tabulation}
+
+    %\noindent 
+    \textbf{Capacity:} $W = 8$\\[0.5em]
+
+    \begin{columns}[T]
+        \column{0.45\textwidth}
+        \textbf{Items:}
+        \[
+        \begin{array}{c|c|c}
+            i & w_i & v_i \\
+            \hline
+            1 & 2 & 3 \\
+            2 & 3 & 4 \\
+            3 & 4 & 5 \\
+            4 & 5 & 6 \\
+        \end{array}
+        \]
+
+        \column{0.60\textwidth}
+        \textbf{Table} $\texttt{ks}[i][w]$:
+        \small
+        \begin{tabular}{c|ccccccccc}
+            $i\backslash w$ & 0&1&2&3&4&5&6&7&8 \\
+            \hline
+            0 & 0&0&0&0&0&0&0&0&0 \\
+            1 & 0&0&3&3&3&3&3&3&3 \\
+            2 & 0&0&3&4&4&7&7&7&7 \\
+            3 & 0&0&3&4&5&7&8&9&9 \\
+            4 & 0&0&3&4&5&7&8&9&\textbf{10} \\
+        \end{tabular}
+    \end{columns}
+
+    \vspace{1em}
+    Optimal value: $\texttt{ks}[4][8] = 10$ \\
+    Selected items: \textbf{2 and 4} \quad \\ (weight: $3+5=8$, value: $4+6=10$)
+    \bigskip
+    \footnotesize
+    \begin{itemize}
+        \item \textbf{Time complexity}: $O(nW)$
+        \item \textbf{Space complexity}: $O(nW)$ (optimizable to $O(W)$)
+    \end{itemize}
+\end{frame}
+
+
+\end{document}
