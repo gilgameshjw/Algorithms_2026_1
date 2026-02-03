@@ -272,7 +272,6 @@ Stack Overflow? & No & \textcolor{red}{Yes} \\
 
 
 
-
 \section{Master Theorem}
 
 \begin{frame}
@@ -287,25 +286,25 @@ Asymptotic behavior of $T(n) = a \cdot T\left(\frac{n}{b}\right) + f(n)$:\\
 \footnotesize
 \begin{enumerate}
     \item \textbf{Case 1 (Subproblem Dominated):} \\
-    If $ f(n) = O(n^c) $ where $ c < c_{\text{crit}} $, then:
+    If $ f(n) = \mathcal{O}(n^c) $ where $ c < c_{\text{crit}} $, then:
     \[
-    T(n) = \Theta(n^{\log_b a})
+    T(n) = \mathcal{O}(n^{\log_b a})
     \]
 
     \item \textbf{Case 2 (Balanced):} \\
-    If $ f(n) = \Theta(n^{c_{\text{crit}}}) $, then:
+    If $ f(n) = \mathcal{O}(n^{c_{\text{crit}}}) $, then:
     \[
-    T(n) = \Theta(n^{c_{\text{crit}}} \log n) = \Theta(n^{\log_b a} \log n)
+    T(n) = \mathcal{O}(n^{c_{\text{crit}}} \log n) = \mathcal{O}(n^{\log_b a} \log n)
     \]
 
     \item \textbf{Case 3 (Work Dominated):} \\
-    If $ f(n) = \Omega(n^c) $ where $ c > c_{\text{crit}} $, and if the \textbf{regularity condition} holds:
+    If $ f(n) = \mathcal{O}(n^c) $ where $ c > c_{\text{crit}} $, and if the \textbf{regularity condition} holds:
     \[
     a  f\left(\frac{n}{b}\right) \leq k  f(n) \quad \text{for constant } k < 1 \text{ and all sufficiently large } n,
     \]
     then:
     \[
-    T(n) = \Theta(f(n))
+    T(n) = \mathcal{O}(f(n))
     \]
 \end{enumerate}
     
