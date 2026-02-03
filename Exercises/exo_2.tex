@@ -1,0 +1,97 @@
+\documentclass[11pt]{article}
+
+% ======================
+% Packages
+% ======================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+% ======================
+% Page Layout
+% ======================
+\geometry{a4paper, margin=1in}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
+
+% ======================
+% Colors & Code Styling
+% ======================
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\small,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+% ======================
+% Theorem-like Environments
+% ======================
+\newtheorem{problem}{Problem}
+\newtheorem{subproblem}{Subproblem}[problem]
+\newtheorem{solution}{Solution}[problem]
+
+% ======================
+% Title Info
+% ======================
+\title{\textbf{Fundamental Algorithm Techniques} \\ Problem Set \#2--\#3}
+%\author{Your Name \\ Student ID: 12345678}
+\date{Due: February 3, 2026}
+
+% ======================
+% Document
+% ======================
+\begin{document}
+
+\maketitle
+
+\begin{problem}[Sorting Algorithms]
+    Write Sorting Algorithms:
+    \begin{enumerate}
+        \item write own bad $\mathcal{O}(n^2)$ sorting
+        \item create few tests of various sizes and control that algo. is working
+        \item write own Quick Sort
+            \begin{itemize}
+                \item add random pivot
+                \item add average pivot (down + middle + up)
+            \end{itemize}
+        \item write own Merge Sort
+        \item write own Heap Sort
+    \end{enumerate}
+    
+\end{problem}
+
+\begin{problem}[Analyse Sorting Algorithms]
+Analyse succintly, for all sorting Algorithms above, time and space complexities using the master theorem where applicable
+\end{problem}
+
+
+\end{document}
