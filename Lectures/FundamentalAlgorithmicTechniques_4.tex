@@ -48,6 +48,59 @@
     \tableofcontents
 \end{frame}
 
+\section{Quick Sort}
+
+\begin{frame}
+    \frametitle{QuickSort}
+    \begin{columns}[T]
+        \column{0.48\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{Algos_figs/Quick_sort_algorithm.png}\\[0.5em]
+        \footnotesize Quicksort Algorithm
+        
+        \column{0.48\linewidth}
+        \small
+        \begin{algorithmic}[1]
+            \Function{Quicksort}{$A, p, r$}
+                \If{$p < r$}
+                    \State $q \gets \Call{Partition}{A, p, r}$
+                    \State \Call{Quicksort}{$A, p, q - 1$}
+                    \State \Call{Quicksort}{$A, q + 1, r$}
+                \EndIf
+            \EndFunction
+        \end{algorithmic}
+    \end{columns}
+\end{frame}
+
+\section{Merge Sort}
+
+\begin{frame}[fragile]
+    \frametitle{MergeSort Algorithm}
+    \scriptsize
+    \begin{algorithmic}[1]
+        \Function{MergeSort}{$A, p, r$}
+            \If{$p < r$}
+                \State $q \gets \lfloor (p+r)/2 \rfloor$
+                \State \Call{MergeSort}{$A, p, q$}
+                \State \Call{MergeSort}{$A, q+1, r$}
+                \State \Call{Merge}{$A, p, q, r$}
+            \EndIf
+        \EndFunction
+        \Statex\vspace{-1.2ex}
+        \Function{Merge}{$A, p, q, r$}
+            \State $L \gets A[p..q],\; R \gets A[q+1..r]$
+            \State $i \gets j \gets 1$
+            \For{$k \gets p \text{ to } r$}
+                \If{$j > |R|$ \textbf{or} ($i \leq |L|$ \textbf{and} $L[i] \leq R[j]$)}
+                    \State $A[k] \gets L[i];\; i \gets i+1$
+                \Else
+                    \State $A[k] \gets R[j];\; j \gets j+1$
+                \EndIf
+            \EndFor
+        \EndFunction
+    \end{algorithmic}
+\end{frame}
+
 \section{Heap Sort}
 
 \begin{frame}
@@ -114,66 +167,7 @@
     \footnotesize \textit{Example: $[3,7,1,8,2,5,9,4,6]$}
 \end{frame}
 
-\section{Merge Sort}
-
-\begin{frame}
-    \frametitle{MergeSort}
-    \begin{algorithmic}[1]
-        \Function{MergeSort}{$A, p, r$}
-            \If{$p < r$}
-                \State $q \gets \left\lfloor \dfrac{p + r}{2} \right\rfloor$
-                \State \Call{MergeSort}{$A, p, q$}
-                \State \Call{MergeSort}{$A, q + 1, r$}
-                \State \Call{Merge}{$A, p, q, r$}
-            \EndIf
-        \EndFunction
-    \end{algorithmic}
-\end{frame}
-
-\section{Quick Sort}
-
-\begin{frame}
-    \frametitle{QuickSort}
-    \begin{columns}[T]
-        \column{0.48\linewidth}
-        \centering
-        \includegraphics[width=\linewidth]{Algos_figs/Quick_sort_algorithm.png}\\[0.5em]
-        \footnotesize Quicksort Algorithm
-        
-        \column{0.48\linewidth}
-        \small
-        \begin{algorithmic}[1]
-            \Function{Quicksort}{$A, p, r$}
-                \If{$p < r$}
-                    \State $q \gets \Call{Partition}{A, p, r}$
-                    \State \Call{Quicksort}{$A, p, q - 1$}
-                    \State \Call{Quicksort}{$A, q + 1, r$}
-                \EndIf
-            \EndFunction
-        \end{algorithmic}
-    \end{columns}
-\end{frame}
-
 \section{Analysis of Sorting Algorithms}
-
-\begin{frame}
-    \frametitle{Problem Space Reduction}
-    {\bf Space of permutations} for array $v$ of size $n$: 
-    \[
-    \approx n!
-    \]
-    
-    \bigskip
-    {\bf Idea:} Reduce permutation space via divide-and-conquer transformations.
-    
-    \bigskip
-    {\bf MergeSort heuristic:} 
-    Merging two sorted subarrays of size $n/2$ reduces uncertainty by combining two independent orderings. 
-    With $\approx \log_2 n$ levels of recursion and $O(n)$ work per level:
-    \[
-    \mathcal{O}(n \log n)
-    \]
-\end{frame}
 
 \begin{frame}
     \frametitle{Analysis of Merge Sort}
@@ -234,6 +228,25 @@
     hs(n) = \mathcal{O}(1) + \sum_{i=2}^{n} \mathcal{O}(\log i) = \mathcal{O}\left(\sum_{i=1}^{n} \log i\right) = \mathcal{O}(\log n!) = \Theta(n \log n)
     \]
     (using $\log n! = \Theta(n \log n)$ via Stirling's approximation)
+\end{frame}
+
+\begin{frame}
+    \frametitle{Problem Space Reduction}
+    {\bf Space of permutations} for array $v$ of size $n$: 
+    \[
+    \approx n!
+    \]
+    
+    \bigskip
+    {\bf Idea:} Reduce permutation space via divide-and-conquer transformations.
+    
+    \bigskip
+    {\bf MergeSort heuristic:} 
+    Merging two sorted subarrays of size $n/2$ reduces uncertainty by combining two independent orderings. 
+    With $\approx \log_2 n$ levels of recursion and $O(n)$ work per level:
+    \[
+    \mathcal{O}(n \log n)
+    \]
 \end{frame}
 
 \end{document}
