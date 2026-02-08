@@ -1,0 +1,136 @@
+\documentclass[11pt]{article}
+
+% ======================
+% Packages
+% ======================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+% ======================
+% Page Layout
+% ======================
+\geometry{a4paper, margin=1in}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
+
+% ======================
+% Colors & Code Styling
+% ======================
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\small,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+% ======================
+% Theorem-like Environments
+% ======================
+\newtheorem{problem}{Problem}
+\newtheorem{subproblem}{Subproblem}[problem]
+\newtheorem{solution}{Solution}[problem]
+
+% ======================
+% Title Info
+% ======================
+\title{\textbf{Fundamental Algorithm Techniques} \\ Problem Set \#3}
+%\author{Your Name \\ Student ID: 12345678}
+\date{Due: October 25, 2025}
+
+% ======================
+% Document
+% ======================
+\begin{document}
+
+\maketitle
+
+\begin{problem}[Fibonacci Super Fast!]
+\begin{enumerate}
+    \item compute Fibonacci with the relation: 
+    \[
+            \begin{bmatrix}
+            F_{n+1} \\
+            F_{n}
+            \end{bmatrix}
+            =
+            \begin{bmatrix}
+            1 & 1 \\
+            1 & 0
+            \end{bmatrix}^{\!n}
+            \begin{bmatrix}
+            1 \\
+            0
+            \end{bmatrix}
+            \]
+    \item This can also be expressed as:
+    \[\begin{bmatrix}
+    
+            F_{n+1} \\
+            F_{n}
+            \end{bmatrix}
+            =
+            \left(\begin{bmatrix}
+            2 & 1 \\
+            1 & 1
+            \end{bmatrix}\right)^{\!n/2}
+            \begin{bmatrix}
+            1 \\
+            0
+            \end{bmatrix}
+            ,\]
+        use Master Theorem to discuss the complexity of this decomposition and show, explain why time complexity is then $\mathrm{log}_2(n)$. 
+\end{enumerate}
+\end{problem}
+
+
+
+
+
+\begin{problem}[Levenshtein (Edit) Distance]
+Compute the edit distance between the strings:\\
+"SATURDAY" and "SUNDAY" using a tabular approach.
+\end{problem}
+
+
+
+\begin{problem}[0/1 Knapsack Algorithm!]
+\begin{enumerate}
+
+\item Why is Knapsack not greedy Algo., why dynamical programming?
+\item Solve the Knapsack Algorithm for the course example. 
+\item Can you get space complexity to $\mathcal{O}(W)$?
+\end{enumerate}
+
+\end{problem}
+
+
+\end{document}
