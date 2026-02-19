@@ -1,0 +1,129 @@
+\documentclass[11pt]{article}
+
+% ======================
+% Packages
+% ======================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{enumerate}
+
+% ======================
+% Page Layout
+% ======================
+\geometry{a4paper, margin=1in}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
+
+% ======================
+% Colors & Code Styling
+% ======================
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\small,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+% ======================
+% Theorem-like Environments
+% ======================
+\newtheorem{problem}{Problem}
+\newtheorem{subproblem}{Subproblem}[problem]
+\newtheorem{solution}{Solution}[problem]
+
+% ======================
+% Title Info
+% ======================
+\title{\textbf{Fundamental Algorithm Techniques} \\ Problem Set \#4}
+\author{\textcolor{red}{No Code Required, Review on February 19}}
+\date{Due: February 26, 2026}
+
+% ======================
+% Document
+% ======================
+\begin{document}
+
+\maketitle
+
+\begin{problem}[Courses Allocation: Dynamic Programming VS Greedy Computing!] 
+For conflict free course allocation as in the course: \\
+Consider set of activities:
+\[
+    S = \{a_1 ,\, a_2 ,\, \cdots ,\, a_n\}, 
+\]
+each with starting and ending times $s_i$, $f_i$.
+Assume also that $S$ is sorted such that:
+\[f_1\leq f_2\leq \cdots \leq f_n\]
+
+A set of compatible activities $\hat S_{ap}$ means that each activities of $\hat S_{ap}$ starts after the last activity ended and ends before the next activity starts.
+
+
+\begin{itemize}
+    \item {\bf Dynamical Approach:} \\ Consider the recurrence below for the cost $c[a, p] = c[a, k] + c[k, p] + 1$ between the course $a_a$ and $a_p$:
+    \[ c[a, p] = 
+\begin{cases}
+0 & \text{if } \hat S_{ap} = \emptyset, \\
+\max \left\{ c[a, k] + c[k, p] + 1 \mid a_k \in \hat S_{ap} \right\} & \text{if } \hat S_{ap} \neq \emptyset,
+\end{cases}\]
+
+\begin{enumerate}
+    \item  Structuring the problem with $\hat S_{ap}$ actually characterises optimal substructures? Can therefore dynamical computing can be used? 
+    \item  Explain/draw how that can be used for dynamical programming, top down with recurrence: $RecuSelect(s,\, f,\, k,\, n)$, starts $(s,\, f,\, 0,\, n)$, return list $a_i$'s.
+    \item dynamical programming with tabulation. 
+\end{enumerate}
+
+\item {\bf Greedy Approach:} 
+\begin{enumerate}[I.]
+    \item What is the greedy choice for the activity-selection problem? \footnote{choose the activity in S
+with the earliest finish time and bottom up, like in the course...:-)}
+    \item Write the pseudocode for the greedy approach $\mathrm{GreedySchedule}(s, f, n)$ \\
+	    {\bf !!!consider sorting courses first!}.
+    \item Prove that your GreedySchedule is optimal using\footnote{See course V! } ({\bf hard})
+    \begin{itemize}
+        \item induction
+        \item stay ahead arguments
+        \item contradiction
+    \end{itemize}
+\end{enumerate}
+\end{itemize}
+
+
+\end{problem}
+
+
+
+
+
+%\begin{problem}[0/1 Knapsack Algorithm!]
+%\end{problem}
+
+\end{document}
