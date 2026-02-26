@@ -1,0 +1,537 @@
+
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{url}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{lmodern}
+\usepackage{natbib}
+\usepackage{tikz}
+%\documentclass
+\usepackage{tikz}
+\usetikzlibrary{graphs,graphdrawing}
+\usegdlibrary{force}
+
+\usepackage{physics}
+\usepackage{graphicx} % Allows including images
+\graphicspath{ {./images/} }
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+
+\usetikzlibrary{graphs, graphdrawing}
+\usegdlibrary{circular}
+
+
+
+
+\usetikzlibrary{mindmap, trees, shadows, shapes, calc, fadings, positioning, decorations.pathreplacing, intersections, shapes, arrows}
+
+%\usetheme{Hannover}
+%\usecolortheme{spruce}
+% EPIC FAIL
+\usetheme{default}
+%\usecolortheme{beetle}
+\usepackage{graphics}
+
+\usepackage{color}
+\definecolor{new_turquoise}{RGB}{40,151,158}%{251,190,94}
+\setbeamercolor{title}{fg=new_turquoise}
+
+
+%\usepackage[colorlinks=true, urlcolor=blue, linkcolor=red]{hyperref}
+
+
+
+
+\setbeamercolor{frametitle}{fg=new_turquoise}
+\setbeamertemplate{itemize item}{\color{new_turquoise}$\blacksquare$}
+\setbeamertemplate{itemize subitem}{\color{new_turquoise}$\blacksquare$}
+
+
+% --- ENUMERATE ITEMS ---
+\setbeamertemplate{enumerate item}{\color{new_turquoise}\insertenumlabel}
+\setbeamertemplate{enumerate subitem}{\color{new_turquoise}\insertsubenumlabel}
+
+\setbeamertemplate{caption}{\raggedright\insertcaption\par}
+
+% --- COLOR THE TABLE OF CONTENTS ENTRIES ---
+\setbeamercolor{section in toc}{fg=new_turquoise}
+\setbeamercolor{subsection in toc}{fg=new_turquoise}
+\setbeamercolor{subsubsection in toc}{fg=new_turquoise}
+
+
+
+\usebackgroundtemplate{
+    \includegraphics[width=\paperwidth,height=\paperheight]{figs/slide-title.jpg}
+} 
+
+\title{\fontsize{49}{7.2}{\bf Fundamental Algorithmic Techniques VIII}}
+%\author{JW}
+%\date{\color{new_turquoise}\today}
+%S\titlegraphic{\includegraphics[width=2cm]{figs/jw.png}}
+
+
+
+
+
+
+\begin{document}
+\frame{\titlepage}
+%% SLIDE 1 - INTRO TO THE TEAM
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usebackgroundtemplate{
+    \includegraphics[width=\paperwidth,height=\paperheight]{figs/slide-pages}
+} 
+
+
+\setbeamertemplate{subsection in toc}{
+  \color{new_turquoise}$\blacksquare$\color{black}~~\inserttocsubsection
+}
+
+
+% Outline frame
+\begin{frame}{Outline}
+    \tableofcontents
+\end{frame}
+
+
+
+\section{Search on Graphs}
+
+\begin{frame}{Graph Traversals: BFS vs DFS}
+\begin{columns}[T]
+\column{0.5\textwidth}
+\textbf{Breadth First Search}
+\begin{itemize}
+\item \textbf{Queue} (FIFO)
+\item Level-order
+\item Shortest path (unweighted)
+\end{itemize}
+
+\centering
+\begin{tikzpicture}[baseline=(current bounding box.center)]
+  \draw[fill=blue!10] (0,0) rectangle (3,0.6);
+  \node at (0.5,0.3) {A}; \node at (1.5,0.3) {B}; \node at (2.5,0.3) {C};
+  \draw[->, thick] (-0.5,0.3) -- (0,0.3); % enqueue
+  \draw[->, thick] (3,0.3) -- (3.5,0.3);  % dequeue
+  \node[below] at (1.5,0) {\footnotesize queue (FIFO)};
+\end{tikzpicture}
+
+\column{0.5\textwidth}
+\textbf{Depth First Search}
+\begin{itemize}
+\item \textbf{Stack} (LIFO)
+\item Deep-first, backtrack
+\item Discovery/finish times
+\item SCCs = Strongly Connected Components
+\end{itemize}
+
+\centering
+\begin{tikzpicture}[baseline=(current bounding box.center)]
+  \foreach \y/\lbl in {0/A, 0.6/B, 1.2/D}
+    \draw[fill=green!10] (0,\y) rectangle (1.2,\y+0.6) node[midway] {\lbl};
+  \draw[->, thick] (0.6,1.8) -- (0.6,1.85); % push
+  \draw[->, thick] (0.6,0) -- (0.6,-0.05);   % pop
+  \node[below] at (0.6,0) {\footnotesize stack (LIFO)};
+\end{tikzpicture}
+\end{columns}
+
+\vspace{0.8em}
+\centering
+\footnotesize Both solve reachability — BFS: wide, DFS: deep
+\end{frame}
+
+
+\begin{frame}{Breadth First Search in Practice}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{Algos_figs/BFS.pdf} % Replace with your actual image file
+    \caption{Example of breadth first search steps}
+\end{figure}
+\end{frame}
+
+
+
+\begin{frame}{Analysis of Search}
+    Search on graph: 
+    $\mathcal{G} = (V, E),$
+    \begin{itemize}
+        \item Each edge uv in the component traversed twice \\
+        $\Longrightarrow$ $2E + 1$
+        \item Search in sparse! Adjacency matrix $\mathcal{O}(V)$, \\$\mathcal{O}(V^2)$ if not sparse!
+    \end{itemize}
+Time complexity: $\mathcal{O}(V + E )$
+\end{frame}
+
+
+
+
+\section{Advanced notions}
+
+
+\begin{frame}{Cliques}
+A \textbf{clique} is a subset of vertices in an undirected graph such that:
+\begin{itemize}
+    \item Every two distinct vertices are \textbf{adjacent}
+    \item The induced subgraph is \textbf{complete}
+\end{itemize}
+
+\vspace{0.5em}
+\textbf{Examples:}
+\begin{columns}[T]
+\column{0.5\textwidth}
+\centering
+\textbf{3-clique} (size 3)\\
+\begin{tikzpicture}[scale=0.85, transform shape]
+  \tikzset{vertex/.style = {circle, draw, minimum size=16pt, inner sep=0pt}}
+  \node[vertex, fill=blue!20] (A) at (0,0) {A};
+  \node[vertex, fill=blue!20] (B) at (1.5,0) {B};
+  \node[vertex, fill=blue!20] (C) at (0.75,1.3) {C};
+  \draw (A) -- (B) -- (C) -- (A);
+\end{tikzpicture}
+
+\column{0.5\textwidth}
+\centering
+\textbf{2-clique} (size 2)\\
+\begin{tikzpicture}[scale=0.85, transform shape]
+  \tikzset{vertex/.style = {circle, draw, minimum size=16pt, inner sep=0pt}}
+  \node[vertex, fill=green!20] (X) at (0,0) {X};
+  \node[vertex, fill=green!20] (Y) at (1.5,0) {Y};
+  \draw (X) -- (Y);
+  % Isolated node to show it's not part of the clique
+  \node[vertex] (Z) at (0.75,1.2) {Z};
+\end{tikzpicture}
+\end{columns}
+
+\vspace{0.8em}
+\footnotesize
+\textbf{Note:} 
+
+\begin{itemize}
+    \item Any single edge is a clique of size 2. The largest clique in a graph is the \textit{maximum clique} (NP-hard to compute).
+    \item Bron-Kerbosch algorithm for finding maximum clique
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Minimum Spanning Tree (MST)}
+A \textbf{spanning tree} of a connected, undirected graph $G = (V, E)$ is:
+\begin{itemize}
+\item A subgraph that is a \textbf{tree}
+\item Includes \textbf{all vertices} ($|V|$ nodes)
+\item Has exactly $|V| - 1$ edges (no cycles)
+\end{itemize}
+
+A \textbf{minimum spanning tree} (MST) is a spanning tree with the \textbf{smallest possible total edge weight}.
+
+\vspace{0.5em}
+\textbf{Example:}
+\centering
+\begin{tikzpicture}[scale=0.85, transform shape, >=stealth]
+  \tikzset{
+    vertex/.style = {circle, draw, minimum size=20pt, inner sep=0pt},
+    edge/.style = {thick}
+  }
+
+  % Original graph (left)
+  \node[vertex] (A) at (0,0) {A};
+  \node[vertex] (B) at (2,1) {B};
+  \node[vertex] (C) at (4,0) {C};
+  \node[vertex] (D) at (2,-1) {D};
+
+  % Edges with weights
+  \draw[edge] (A) -- (B) node[midway, above] {1};
+  \draw[edge] (A) -- (C) node[midway, below] {4};
+  \draw[edge] (A) -- (D) node[midway, left] {3};
+  \draw[edge] (B) -- (C) node[midway, above] {2};
+  \draw[edge] (B) -- (D) node[midway, right] {5};
+  \draw[edge] (C) -- (D) node[midway, below] {6};
+
+  % MST (right)
+  \node[vertex] (A2) at (6,0) {A};
+  \node[vertex] (B2) at (8,1) {B};
+  \node[vertex] (C2) at (10,0) {C};
+  \node[vertex] (D2) at (8,-1) {D};
+
+  % MST edges (thicker + blue)
+  \draw[edge, blue, very thick] (A2) -- (B2) node[midway, above] {1};
+  \draw[edge, blue, very thick] (B2) -- (C2) node[midway, above] {2};
+  \draw[edge, blue, very thick] (A2) -- (D2) node[midway, left] {3};
+
+  % Labels
+  \node[below] at (2,-1.8) {Original graph};
+  \node[below] at (8,-1.8) {MST (total weight = 6)};
+\end{tikzpicture}
+
+\vspace{0.5em}
+\footnotesize
+Used in network design, clustering, and approximation algorithms.
+\end{frame}
+
+
+\begin{frame}{Shortest Path}
+\centering
+\begin{tikzpicture}[scale=0.9, every node/.style={font=\footnotesize}, thick]
+  % Vertices
+  \foreach \pos/\name in {
+    {(0,0)/s}, {(2,1.5)/A}, {(2,-1.5)/B}, {(4,0)/C},
+    {(6,1.5)/D}, {(6,-1.5)/E}, {(8,0)/F}, {(10,0)/t}}
+    \node[circle, draw, fill=white, minimum size=20pt] (\name) at \pos {$\name$};
+
+  % Edges with weights (lightly grayed for background)
+  \draw[gray!60] (s) -- (A) node[midway, above] {4};
+  \draw[gray!60] (s) -- (B) node[midway, below] {2};
+  \draw[gray!60] (A) -- (C) node[midway, right] {1};
+  \draw[gray!60] (B) -- (C) node[midway, right] {3};
+  \draw[gray!60] (A) -- (D) node[midway, above] {2};
+  \draw[gray!60] (C) -- (D) node[midway, left] {5};
+  \draw[gray!60] (C) -- (E) node[midway, right] {1};
+  \draw[gray!60] (B) -- (E) node[midway, below] {6};
+  \draw[gray!60] (D) -- (F) node[midway, above] {1};
+  \draw[gray!60] (E) -- (F) node[midway, below] {2};
+  \draw[gray!60] (F) -- (t) node[midway, above] {3};
+  \draw[gray!60] (D) -- (E) node[midway, right] {4};
+
+  % Shortest path: s → B → C → E → F → t
+  % Weights: 2 + 3 + 1 + 2 + 3 = 11
+  % (Verify: other paths like s-A-D-F-t = 4+2+1+3=10? Actually that's shorter! Let's correct.)
+
+  % Let's redesign to ensure s→A→D→F→t is shortest:
+  % s-A:4, A-D:2, D-F:1, F-t:3 → total = 10
+  % s-B-C-E-F-t: 2+3+1+2+3 = 11 → not shortest
+
+  % So highlight s → A → D → F → t
+  \draw[blue, very thick] (s) -- (A);
+  \draw[blue, very thick] (A) -- (D);
+  \draw[blue, very thick] (D) -- (F);
+  \draw[blue, very thick] (F) -- (t);
+
+  % Optional: show total weight
+  \node[blue, above] at (5,2.2) {total weight = 10};
+\end{tikzpicture}
+
+\vspace{1em}
+\footnotesize
+The \textbf{shortest path} from $s$ to $t$ minimizes the sum of edge weights.
+\end{frame}
+
+\begin{frame}{Graph Coloring}
+A \textbf{proper coloring} assigns colors to vertices so that  
+\textbf{no two adjacent vertices share the same color}.
+
+\vspace{0.8em}
+\begin{columns}[T]
+\column{0.5\textwidth}
+\centering
+\textbf{Valid 3-coloring}\\
+\begin{tikzpicture}[scale=0.85, vertex/.style={circle, draw, minimum size=20pt}]
+  \node[vertex, fill=red!30] (A) at (0,0) {A};
+  \node[vertex, fill=blue!30] (B) at (2,0) {B};
+  \node[vertex, fill=green!30] (C) at (1,1.73) {C};
+  \node[vertex, fill=red!30] (D) at (3,1.73) {D};
+  
+  \draw (A) -- (B) -- (C) -- (A);
+  \draw (B) -- (D);
+  \draw (C) -- (D);
+\end{tikzpicture}
+
+\column{0.5\textwidth}
+\centering
+\textbf{Invalid coloring}\\
+\begin{tikzpicture}[scale=0.85, vertex/.style={circle, draw, minimum size=20pt}]
+  \node[vertex, fill=red!30] (A) at (0,0) {A};
+  \node[vertex, fill=red!30] (B) at (2,0) {B}; % ← same color as A, but adjacent!
+  \node[vertex, fill=green!30] (C) at (1,1.73) {C};
+  \node[vertex, fill=blue!30] (D) at (3,1.73) {D};
+  
+  \draw (A) -- (B) -- (C) -- (A);
+  \draw (B) -- (D);
+  \draw (C) -- (D);
+  
+  % Highlight conflict
+  \draw[red, thick, <->] (A) -- (B) node[midway, below, black] {\footnotesize conflict};
+\end{tikzpicture}
+\end{columns}
+
+\vspace{0.8em}
+\footnotesize
+The smallest number of colors needed is the \textbf{chromatic number}.
+\end{frame}
+
+
+\begin{frame}{Planar Graphs}
+A graph is \textbf{planar} if it can be drawn in the plane  
+\textbf{without edge crossings} (except at vertices).
+
+\vspace{0.8em}
+\begin{columns}[T]
+\column{0.5\textwidth}
+\centering
+\textbf{Planar graph}\\
+\begin{tikzpicture}[scale=0.8, every node/.style={circle, draw, minimum size=18pt, inner sep=0pt}]
+  \node (A) at (0,0) {A};
+  \node (B) at (2,0) {B};
+  \node (C) at (2,2) {C};
+  \node (D) at (0,2) {D};
+  \node (E) at (1,1) {E};
+  
+  \draw (A) -- (B) -- (C) -- (D) -- (A);
+  \draw (E) -- (A);
+  \draw (E) -- (B);
+  \draw (E) -- (C);
+  \draw (E) -- (D);
+\end{tikzpicture}
+\smallskip
+
+\footnotesize
+Drawing without crossings → planar.
+
+\column{0.5\textwidth}
+\centering
+\textbf{Non-planar graph}\\
+\begin{tikzpicture}[scale=0.8, every node/.style={circle, draw, minimum size=18pt, inner sep=0pt}]
+  % K_{3,3} bipartite non-planar
+  \node (U1) at (0,1.5) {U};
+  \node (U2) at (0,0.5) {V};
+  \node (U3) at (0,-0.5) {W};
+  
+  \node (V1) at (2,1.5) {X};
+  \node (V2) at (2,0.5) {Y};
+  \node (V3) at (2,-0.5) {Z};
+  
+  \foreach \u in {U1,U2,U3}
+    \foreach \v in {V1,V2,V3}
+      \draw (\u) -- (\v);
+      
+  % Add a crossing indicator
+  \draw[red, thick, <->] (0.9,1.0) -- (1.1,1.0); % node[midway, above, black, font=\tiny] {crossing}
+\end{tikzpicture}
+\smallskip
+
+\footnotesize
+$K_{3,3}$ (complete bipartite) is non-planar.
+\end{columns}
+
+%\vspace{0.6em}
+%\footnotesize
+%\textbf{Kuratowski’s Theorem}: A graph is non-planar iff it contains a subdivision of $K_5$ or $K_{3,3}$.
+\end{frame}
+
+
+
+\begin{frame}{Strongly Connected Components (SCCs)}
+\small
+  \textbf{Definition:} In a directed graph \(G = (V, E)\), a \textcolor{new_turquoise}{strongly connected component} is a maximal subset \(C \subseteq V\) such that for every pair \(u, v \in C\), there is a directed path from \(u\) to \(v\) \textbf{and} from \(v\) to \(u\).
+
+  \vspace{0.5em}
+  \textbf{Key ideas:}
+  \begin{itemize}
+  \item Every vertex belongs to exactly one SCC.
+  \item SCCs partition the vertex set.
+  \item The \textit{condensation} of \(G\) (contracting each SCC to a node) is a DAG.
+  \end{itemize}
+
+  \vspace{0.8em}
+  \begin{columns}[T]
+    \column{0.5\textwidth}
+      \centering
+      Original graph\\
+      \begin{tikzpicture}[baseline, vertex/.style={circle, draw, minimum size=18pt, inner sep=0pt}, edge/.style={thick}]
+        \node[vertex] (A) at (0,0) {A};
+        \node[vertex] (B) at (1.5,0) {B};
+        \node[vertex] (C) at (3,0) {C};
+        \node[vertex] (D) at (1.5,-1.5) {D};
+        \node[vertex] (E) at (3,-1.5) {E};
+        
+        \draw[edge] (A) -- (B);
+        \draw[edge] (B) -- (C);
+        \draw[edge] (C) to[bend left=20] (B);
+        \draw[edge] (B) -- (D);
+        \draw[edge] (D) -- (E);
+        \draw[edge] (E) to[bend left=20] (D);
+      \end{tikzpicture}
+
+    \column{0.5\textwidth}
+      \centering
+      SCCs (condensation)\\
+      \begin{tikzpicture}[baseline, vertex/.style={circle, draw, minimum size=18pt, inner sep=0pt}, edge/.style={thick}]
+        \node[vertex, fill=blue!20] (AB) at (0,0) {A};
+        \node[vertex, fill=red!20] (BC) at (1.8,0) {B,C};
+        \node[vertex, fill=green!20] (DE) at (1.8,-1.5) {D,E};
+        
+        \draw[edge] (AB) -- (BC);
+        \draw[edge] (BC) -- (DE);
+      \end{tikzpicture}
+  \end{columns}
+
+  \vspace{0.5em}
+  \textbf{Algorithms:} Kosaraju’s, Tarjan’s, or Gabow’s (all linear time: \(O(|V| + |E|)\)).
+\end{frame}
+
+
+
+
+
+\begin{frame}{Graph Transformations}
+\begin{columns}
+\begin{column}{0.33\textwidth}
+\centering
+\textbf{Original Graph}\\
+\begin{tikzpicture}[scale=0.6]
+\graph[circular placement, radius=1.5cm, nodes={circle, draw, minimum size=0.7cm}] {
+    a, b, c, d;
+    a -> {b, c};
+    b -> {c, d};
+    c -> {d};
+};
+\end{tikzpicture}
+\end{column}
+
+\begin{column}{0.33\textwidth}
+\centering
+\textbf{Transpose Graph}\\
+(Edges reversed)\\
+\begin{tikzpicture}[scale=0.6]
+\graph[circular placement, radius=1.5cm, nodes={circle, draw, minimum size=0.7cm}] {
+    a, b, c, d;
+    b -> {a};
+    c -> {a, b};
+    d -> {b, c};
+};
+\end{tikzpicture}
+\end{column}
+
+\begin{column}{0.33\textwidth}
+\centering
+\textbf{Dual Graph}\\
+(Faces become vertices)\\
+\begin{tikzpicture}[scale=0.6]
+\draw (0,0) -- (2,0) -- (2,2) -- (0,2) -- cycle;
+\draw (0,0) -- (2,2);
+\draw (2,0) -- (0,2);
+\node[circle, draw, minimum size=0.5cm] at (1,1) {f1};
+\node[circle, draw, minimum size=0.5cm] at (0.5,0.5) {f2};
+\node[circle, draw, minimum size=0.5cm] at (1.5,0.5) {f3};
+\node[circle, draw, minimum size=0.5cm] at (1.5,1.5) {f4};
+\node[circle, draw, minimum size=0.5cm] at (0.5,1.5) {f5};
+\end{tikzpicture}
+\end{column}
+\end{columns}
+
+\begin{center}
+\vspace{1em}
+\textbf{Inverse Graph}: If $(u,v) \in E$, then $(u,v) \notin E_{inv}$ (complement)
+\end{center}
+\end{frame}
+
+
+
+
+
+
+
+\end{document}
+
+
