@@ -1,0 +1,97 @@
+\documentclass[11pt]{article}
+
+% ======================
+% Packages
+% ======================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{enumerate}
+
+% ======================
+% Page Layout
+% ======================
+\geometry{a4paper, margin=1in}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
+
+% ======================
+% Colors & Code Styling
+% ======================
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\small,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+% ======================
+% Theorem-like Environments
+% ======================
+\newtheorem{problem}{Problem}
+\newtheorem{subproblem}{Subproblem}[problem]
+\newtheorem{solution}{Solution}[problem]
+
+% ======================
+% Title Info
+% ======================
+\title{\textbf{Fundamental Algorithm Techniques} \\ Problem Set \#6} % \author{}
+\date{\textcolor{red}{Review on Mars 12}} %Due: November 01, 2025}
+
+% ======================
+% Document
+% ======================
+\begin{document}
+
+\maketitle
+
+
+
+\begin{problem}[Facebook Interview, 10/10 pts]
+We consider trees of $n$ children,  each with weight $1/n$ of their parent's weight.
+\begin{enumerate}
+    \item Write the general class for this object 
+    \item Generate a tree of depth $N=3$, with initial parent tree of weight $1/n$
+    \item create a depth first recursive function visiting each node and summing up the weights. Make sure it returns 1 for various $n$'s! 
+    \item Same with breadth first, check also 1!
+    \item Same as above for both searches, but each time you reach a node, flip the value sign. Make sure you get 1 and -1 after both first and second searches (run a test with fixed $n$)!
+    \item Write recursive and non recursive versions of breadth first.
+    \item Whilst depth first can be implemented recursively, it is not recommended for breadth first! Explain why? 
+    \item Post discussion and code to github and in time!
+\end{enumerate}
+
+\end{problem}
+
+
+
+
+\end{document}
+
