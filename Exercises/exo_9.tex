@@ -1,0 +1,129 @@
+\documentclass[11pt]{article}
+
+% ======================
+% Packages
+% ======================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{enumerate}
+
+
+\usepackage{graphicx}    % For \includegraphics
+\usepackage{tikz}        % For drawing graphs and diagrams
+\usepackage{amsmath}     % For math symbols (e.g., \infty, \emptyset)
+\usepackage{amssymb}     % Additional math symbols
+\usepackage{array}       % For table formatting
+\usepackage{booktabs}    % For better table rules (optional, but nice)
+\usepackage{xcolor}      % For colored text (if needed)
+\usepackage{caption}     % For \captionof{} (optional, for Beamer)
+
+
+% ======================
+% Page Layout
+% ======================
+\geometry{a4paper, margin=1in}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
+
+% ======================
+% Colors & Code Styling
+% ======================
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\small,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+% ======================
+% Theorem-like Environments
+% ======================
+\newtheorem{problem}{Problem}
+\newtheorem{subproblem}{Subproblem}[problem]
+\newtheorem{solution}{Solution}[problem]
+
+% ======================
+% Title Info
+% ======================
+\title{\textbf{Fundamental Algorithm Techniques} \\ Problem Set \#8} % \author{}
+\date{\textcolor{red}{Review on April 2}} %Due: November 01, 2025}
+
+% ======================
+% Document
+% ======================
+\begin{document}
+
+\maketitle
+
+
+
+\begin{problem}[SCC and reversal, 4/10 pts]
+Let $G$ a directed graph: 
+\begin{enumerate}
+    \item Describe an algorithm to compute the reversal $\operatorname{rev}(G)$ of a directed graph $G$ in $O(V + E)$ time.
+    
+    \item Prove that for every directed graph $G$, the strong component graph $\operatorname{scc}(G)$\footnote{scc(G) merges every strong component into a single point} is acyclic.
+    
+    \item Prove that $\operatorname{scc}(\operatorname{rev}(G)) = \operatorname{rev}(\operatorname{scc}(G))$ for every directed graph $G$.
+    
+    \item Fix an arbitrary directed graph $G$. For any vertex $v$ of $G$, let $S(v)$ denote the strong component of $G$ that contains $v$. For all vertices $u$ and $v$ of $G$, prove that $u$ can reach $v$ in $G$ if and only if $S(u)$ can reach $S(v)$ in $\operatorname{scc}(G)$.
+\end{enumerate}
+\end{problem}
+
+
+\begin{problem}[Euler Tour, 2/10 pts]
+
+An Euler tour of a strongly connected, directed graph $G = (V, E)$ is a cycle that traverses each edge of $G$ exactly once (independantly of starting point), although it may visit a vertex more than once.
+
+\begin{enumerate}
+    \item Show that $G$ has an Euler tour if and only if $\text{in-degree}(v) = \text{out-degree}(v)$\footnote{in-/out-degree number or in/out-flowing arrows respectively.} for each vertex $v \in V$.
+    
+    \item Describe an $O(E)$-time algorithm to find an Euler tour of $G$ if one exists. (Hint: Merge edge-disjoint cycles.)
+\end{enumerate}
+
+\end{problem}
+
+\begin{problem}[Topological Search, 4/10 pts]
+Perform Topological Sort on course example: \\
+\{$A\rightarrow B, A\rightarrow C, B \rightarrow C, B \rightarrow D, C \rightarrow E,  D \rightarrow E, D \rightarrow F, G \rightarrow F, G \rightarrow E\}$.
+
+Starting from A, find orders of the course.
+Start from another node at random and find one or two sortings\footnote{\href{https://www.youtube.com/watch?v=xqLY-ZLJig8}{video topological sort}...}.
+
+
+
+\end{problem}
+
+
+
+\end{document}
+
