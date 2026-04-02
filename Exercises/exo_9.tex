@@ -6,7 +6,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
-\usepackage{amsmath, amssymb, amsthm}
+\usepackage{amsmath,amssymb,amsthm}
 \usepackage{geometry}
 \usepackage{listings}
 \usepackage{xcolor}
@@ -15,18 +15,12 @@
 \usepackage{algpseudocode}
 \usepackage{hyperref}
 \usepackage{enumitem}
-\usepackage{enumerate}
+\usepackage{tikz}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{caption}
 
-
-\usepackage{graphicx}    % For \includegraphics
-\usepackage{tikz}        % For drawing graphs and diagrams
-\usepackage{amsmath}     % For math symbols (e.g., \infty, \emptyset)
-\usepackage{amssymb}     % Additional math symbols
-\usepackage{array}       % For table formatting
-\usepackage{booktabs}    % For better table rules (optional, but nice)
-\usepackage{xcolor}      % For colored text (if needed)
-\usepackage{caption}     % For \captionof{} (optional, for Beamer)
-
+\usetikzlibrary{arrows.meta,positioning}
 
 % ======================
 % Page Layout
@@ -74,8 +68,8 @@
 % ======================
 % Title Info
 % ======================
-\title{\textbf{Fundamental Algorithm Techniques} \\ Problem Set \#8} % \author{}
-\date{\textcolor{red}{Review on April 2}} %Due: November 01, 2025}
+\title{\textbf{Fundamental Algorithm Techniques} \\ Problem Set \#8}
+\date{\textcolor{red}{Review on April 9}}
 
 % ======================
 % Document
@@ -84,46 +78,67 @@
 
 \maketitle
 
-
-
-\begin{problem}[SCC and reversal, 4/10 pts]
-Let $G$ a directed graph: 
-\begin{enumerate}
-    \item Describe an algorithm to compute the reversal $\operatorname{rev}(G)$ of a directed graph $G$ in $O(V + E)$ time.
-    
-    \item Prove that for every directed graph $G$, the strong component graph $\operatorname{scc}(G)$\footnote{scc(G) merges every strong component into a single point} is acyclic.
-    
-    \item Prove that $\operatorname{scc}(\operatorname{rev}(G)) = \operatorname{rev}(\operatorname{scc}(G))$ for every directed graph $G$.
-    
-    \item Fix an arbitrary directed graph $G$. For any vertex $v$ of $G$, let $S(v)$ denote the strong component of $G$ that contains $v$. For all vertices $u$ and $v$ of $G$, prove that $u$ can reach $v$ in $G$ if and only if $S(u)$ can reach $S(v)$ in $\operatorname{scc}(G)$.
-\end{enumerate}
-\end{problem}
-
-
-\begin{problem}[Euler Tour, 2/10 pts]
-
-An Euler tour of a strongly connected, directed graph $G = (V, E)$ is a cycle that traverses each edge of $G$ exactly once (independantly of starting point), although it may visit a vertex more than once.
+\begin{problem}[Graph Colouring, 5 pts]
 
 \begin{enumerate}
-    \item Show that $G$ has an Euler tour if and only if $\text{in-degree}(v) = \text{out-degree}(v)$\footnote{in-/out-degree number or in/out-flowing arrows respectively.} for each vertex $v \in V$.
-    
-    \item Describe an $O(E)$-time algorithm to find an Euler tour of $G$ if one exists. (Hint: Merge edge-disjoint cycles.)
+    \item Describe Sudoku as a graph colouring problem and explain the boundary conditions.
 \end{enumerate}
 
 \end{problem}
 
-\begin{problem}[Topological Search, 4/10 pts]
-Perform Topological Sort on course example: \\
-\{$A\rightarrow B, A\rightarrow C, B \rightarrow C, B \rightarrow D, C \rightarrow E,  D \rightarrow E, D \rightarrow F, G \rightarrow F, G \rightarrow E\}$.
+\begin{problem}[Bellman--Ford Algorithm, 5 pts]
 
-Starting from A, find orders of the course.
-Start from another node at random and find one or two sortings\footnote{\href{https://www.youtube.com/watch?v=xqLY-ZLJig8}{video topological sort}...}.
+\begin{center}
+\begin{tikzpicture}[
+    >=Stealth,
+    every node/.style={circle, draw, minimum size=9mm},
+    every path/.style={->, thick}
+]
+
+\node (S) at (0,0) {$S$};
+\node (E) at (2,1.5) {$E$};
+\node (A) at (2,-1.5) {$A$};
+\node (D) at (4,1.5) {$D$};
+\node (C) at (6,0) {$C$};
+\node (B) at (8,0) {$B$};
+
+\draw (S) -- node[above left] {8} (E);
+\draw (S) -- node[below left] {10} (A);
+\draw (E) -- node[above] {1} (D);
+\draw (D) -- node[above right] {-1} (C);
+\draw (D) to[bend right=35] node[left] {-4} (A);
+\draw (A) -- node[below] {2} (C);
+\draw (A) to[bend right=15] node[below] {1} (B);
+\draw (C) -- node[above] {1} (B);
+
+\end{tikzpicture}
+\end{center}
 
 
+
+
+Consider the directed weighted graph above with edges:
+\[
+S \to E = 8,\quad
+S \to A = 10,\quad
+E \to D = 1,\quad
+D \to C = -1,
+\]
+\[
+D \to A = -4,\quad
+A \to C = 2,\quad
+A \to B = 1,\quad
+C \to B = 1.
+\]
+
+\begin{enumerate}
+    \item Run the Bellman--Ford algorithm starting from source vertex $S$.
+    \item Show the distance estimate after each iteration.
+    \item Give the final shortest-path distance from $S$ to every other vertex.
+    \item Explain why Dijkstra's algorithm cannot be run correctly on the above graph.
+    \item State whether the graph contains a negative cycle.
+\end{enumerate}
 
 \end{problem}
-
-
 
 \end{document}
-
