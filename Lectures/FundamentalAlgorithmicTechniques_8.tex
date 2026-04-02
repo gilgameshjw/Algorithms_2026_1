@@ -421,9 +421,11 @@ $K_{3,3}$ (complete bipartite) is non-planar.
 
 
 
+
+
 \begin{frame}{Strongly Connected Components (SCCs)}
 \small
-  \textbf{Definition:} In a directed graph \(G = (V, E)\), a \textcolor{new_turquoise}{strongly connected component} is a maximal subset \(C \subseteq V\) such that for every pair \(u, v \in C\), there is a directed path from \(u\) to \(v\) \textbf{and} from \(v\) to \(u\).
+  \textbf{Definition:} In a directed graph \(G = (V, E)\), a \textcolor{new_turquoise}{strongly connected component} is a maximal subset \(C \subseteq V\) such that for every pair \(u, v \in C\), there is a directed path from \(u\) to \(v\) \textbf{and} from \(v\) to \(u\}.
 
   \vspace{0.5em}
   \textbf{Key ideas:}
@@ -434,43 +436,12 @@ $K_{3,3}$ (complete bipartite) is non-planar.
   \end{itemize}
 
   \vspace{0.8em}
-  \begin{columns}[T]
-    \column{0.5\textwidth}
-      \centering
-      Original graph\\
-      \begin{tikzpicture}[baseline, vertex/.style={circle, draw, minimum size=18pt, inner sep=0pt}, edge/.style={thick}]
-        \node[vertex] (A) at (0,0) {A};
-        \node[vertex] (B) at (1.5,0) {B};
-        \node[vertex] (C) at (3,0) {C};
-        \node[vertex] (D) at (1.5,-1.5) {D};
-        \node[vertex] (E) at (3,-1.5) {E};
-        
-        \draw[edge] (A) -- (B);
-        \draw[edge] (B) -- (C);
-        \draw[edge] (C) to[bend left=20] (B);
-        \draw[edge] (B) -- (D);
-        \draw[edge] (D) -- (E);
-        \draw[edge] (E) to[bend left=20] (D);
-      \end{tikzpicture}
-
-    \column{0.5\textwidth}
-      \centering
-      SCCs (condensation)\\
-      \begin{tikzpicture}[baseline, vertex/.style={circle, draw, minimum size=18pt, inner sep=0pt}, edge/.style={thick}]
-        \node[vertex, fill=blue!20] (AB) at (0,0) {A};
-        \node[vertex, fill=red!20] (BC) at (1.8,0) {B,C};
-        \node[vertex, fill=green!20] (DE) at (1.8,-1.5) {D,E};
-        
-        \draw[edge] (AB) -- (BC);
-        \draw[edge] (BC) -- (DE);
-      \end{tikzpicture}
-  \end{columns}
+  \centering
+  \includegraphics[width=0.75\textwidth]{Algos_figs/sccs.png}
 
   \vspace{0.5em}
-  \textbf{Algorithms:} Kosaraju’s, Tarjan’s, or Gabow’s (all linear time: \(O(|V| + |E|)\)).
+  \textbf{Algorithms:} Kosaraju’s, Tarjan’s, or Gabow’s (all linear time: $\(O(|V| + |E|)\)$).
 \end{frame}
-
-
 
 
 
