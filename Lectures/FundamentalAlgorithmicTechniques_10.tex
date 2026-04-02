@@ -348,16 +348,13 @@ Queue → iterative BFS → safe, predictable memory use.
     \item Repeat relaxation for \textbf{at most $V-1$ iterations} (tree property and so not sensitive to neg. paths)
     \item Run $V$-th iteration to detect negative cycles
 \end{itemize}
-
 \vspace{0.3cm}
 \textcolor{new_turquoise}{\bf Complexity}
 \begin{enumerate}
-
 \item \textbf{Time}: $O(VE)$ — $V-1$ passes, $E$ edges each
     \item \textbf{Space}: $O(V)$ — distance array only
     \item \textbf{vs Dijkstra}: $O(E \log V)$, but no negative edges allowed
 \end{enumerate}
-
 \vspace{0.2cm}
 \textcolor{new_turquoise}{\bf Pseudocode}
 \begin{align*}
@@ -368,7 +365,38 @@ Queue → iterative BFS → safe, predictable memory use.
 &\text{for each edge } (u,v) \text{ with weight } w: \quad \text{// Negative cycle check} \\
 &\quad \text{if } \text{dist}[u] + w < \text{dist}[v]: \text{ return ``Negative cycle detected''}
 \end{align*}
+\end{frame}
 
+
+\begin{frame}{Bellman-Ford: Example Execution}
+\tiny
+
+\textcolor{new_turquoise}{\bf Example Illustration}
+
+\begin{center}
+\includegraphics[width=0.75\textwidth]{Algos_figs/bellman-ford.png}
+\end{center}
+
+\vspace{0.3cm}
+
+\textcolor{new_turquoise}{\bf What is happening?}
+
+\begin{itemize}
+    \item The algorithm repeatedly \textbf{relaxes all edges} in the graph
+    \item Each iteration propagates shorter distances further from the source
+    \item After $k$ iterations, all shortest paths using at most $k$ edges are found
+    \item After $V-1$ iterations, all shortest paths are guaranteed to be correct
+    \item A final pass checks for further improvements → detects \textbf{negative cycles}
+\end{itemize}
+
+\vspace{0.2cm}
+
+\textcolor{new_turquoise}{\bf Intuition}
+
+\begin{itemize}
+    \item Think of distances as “waves” spreading from the source
+    \item Negative edges can pull distances down, but only finitely unless a cycle exists
+\end{itemize}
 
 \end{frame}
 
@@ -391,7 +419,7 @@ A \textcolor{new_turquoise}{\bf Flow Network} is a directed graph \( G = (V, E) 
 \textbf{Value of flow: } \( |f| = \sum_{v} f(s,v) - \sum_{v} f(v,s) \)
 
 \vspace{0.5em}
-Goal: Find a flow of **maximum value** from \( s \) to \( t \).
+	Goal: Find a flow of {\bf maximum value} from \( s \) to \( t \).
 \end{frame}
 
 
