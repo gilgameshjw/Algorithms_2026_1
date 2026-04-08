@@ -69,7 +69,7 @@
 % Title Info
 % ======================
 \title{\textbf{Fundamental Algorithm Techniques} \\ Problem Set \#8}
-\date{\textcolor{red}{Review on April 9}}
+\date{\textcolor{red}{Review on April 16}}
 
 % ======================
 % Document
@@ -78,67 +78,31 @@
 
 \maketitle
 
-\begin{problem}[Graph Colouring, 5 pts]
+\begin{problem}[Cut Theorem, 5 pts]
 
-\begin{enumerate}
-    \item Describe Sudoku as a graph colouring problem and explain the boundary conditions.
-\end{enumerate}
+
+Cut Property / Theorem
+For any cut (S, V\ S), if edge e’s weight is the minimum among
+all edges crossing the cut, then e belongs to some MST of G.
+
 
 \end{problem}
 
-\begin{problem}[Bellman--Ford Algorithm, 5 pts]
-
-\begin{center}
-\begin{tikzpicture}[
-    >=Stealth,
-    every node/.style={circle, draw, minimum size=9mm},
-    every path/.style={->, thick}
-]
-
-\node (S) at (0,0) {$S$};
-\node (E) at (2,1.5) {$E$};
-\node (A) at (2,-1.5) {$A$};
-\node (D) at (4,1.5) {$D$};
-\node (C) at (6,0) {$C$};
-\node (B) at (8,0) {$B$};
-
-\draw (S) -- node[above left] {8} (E);
-\draw (S) -- node[below left] {10} (A);
-\draw (E) -- node[above] {1} (D);
-\draw (D) -- node[above right] {-1} (C);
-\draw (D) to[bend right=35] node[left] {-4} (A);
-\draw (A) -- node[below] {2} (C);
-\draw (A) to[bend right=15] node[below] {1} (B);
-\draw (C) -- node[above] {1} (B);
-
-\end{tikzpicture}
-\end{center}
-
-
-
-
-Consider the directed weighted graph above with edges:
-\[
-S \to E = 8,\quad
-S \to A = 10,\quad
-E \to D = 1,\quad
-D \to C = -1,
-\]
-\[
-D \to A = -4,\quad
-A \to C = 2,\quad
-A \to B = 1,\quad
-C \to B = 1.
-\]
-
+\begin{problem}[Brain and Graph Algorithms, 5 pts]
+Assume you are given a complete structural connectome modeled as a directed weighted graph $G = (V, E, w)$, where:
+\begin{itemize}
+    \item $V$ represents neuronal populations or brain regions,
+    \item $(u, v) \in E$ represents a directed synaptic/axonal connection,
+    \item $w(u, v) > 0$ encodes transmission delay or metabolic cost.
+\end{itemize}
+You aim to retro-engineer distinct ``thinking flows'' (information propagation patterns) that underlie cognitive processes. For each phenomenon below, specify the most appropriate graph algorithm(s), justify your choice, and state the expected time complexity:
 \begin{enumerate}
-    \item Run the Bellman--Ford algorithm starting from source vertex $S$.
-    \item Show the distance estimate after each iteration.
-    \item Give the final shortest-path distance from $S$ to every other vertex.
-    \item Explain why Dijkstra's algorithm cannot be run correctly on the above graph.
-    \item State whether the graph contains a negative cycle.
+    \item[(a)] \textbf{Hierarchical feedforward cascades} (e.g., sensory or motor pathways where information flows strictly forward without loops).
+    \item[(b)] \textbf{Recurrent feedback circuits} (e.g., working memory, sustained attention, or oscillatory activity that circulates within a closed subset of regions).
+    \item[(c)] \textbf{Fastest reactive pathways} (e.g., rapid decision-making or reflex-like responses that minimize delay from stimulus to action).
 \end{enumerate}
-
+Finally, state one fundamental limitation of applying static graph algorithms to model real neural ``thinking flows''.
 \end{problem}
+
 
 \end{document}
