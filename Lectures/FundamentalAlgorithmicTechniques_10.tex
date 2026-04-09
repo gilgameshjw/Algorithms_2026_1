@@ -254,36 +254,37 @@ $v_4$ & \{2,3\} & \textcolor{red}{1} \\
 
 
 
-
-
 \begin{frame}{Flood Fill: More Than Just a Paint Tool}
+\footnotesize  % ← Added here
 
-\textcolor{new_turquoise}{\bf It’s Graph Traversal on a Grid}\\
-Each pixel is a node; edges connect to 4 neighbors.\\
-Flood fill = find connected component of same color.
+\textcolor{new_turquoise}{\bf It's Graph Traversal on a Grid}\\
+Pixels = nodes; edges = 4 neighbors.\\
+Goal: find the same-color \textit{connected component}.
 
-\vspace{0.3cm}
-\textcolor{new_turquoise}{\bf Why Queue? Avoid Stack Overflow}\\
-Recursive DFS crashes on large regions (e.g., 1M pixels).\\
-Queue → iterative BFS → safe, predictable memory use.
+\vspace{0.2cm}
+\textcolor{new_turquoise}{\bf Why Avoid Recursion?}\\
+Recursion uses the limited \textbf{call stack}.\\
+1M pixels = 1M nested calls →  \texttt{StackOverflow!!!}.\\
+\textbf{Iterative} (explicit queue/stack) → heap memory → safe at any scale.
 
-\vspace{0.3cm}
+\vspace{0.2cm}
 \textcolor{new_turquoise}{\bf BFS vs DFS: Shape Matters!}
 \begin{itemize}
-
-\item \textbf{BFS (Queue)}: Circular, even fill — \textit{used in Photoshop}
-    \item \textbf{DFS (Stack)}: Jagged, spiky fill — \textit{faster on small areas}
+    \item \textbf{BFS (Queue)}: Smooth, circular fill \textit{(Photoshop default)}
+    \item \textbf{DFS (Stack)}: Deep, jagged fill \textit{(fast for small spots)}
 \end{itemize}
-\vspace{0.3cm}
-\textcolor{new_turquoise}{\bf Applications}
+
+\vspace{0.2cm}
+\textcolor{new_turquoise}{\bf Real-World Uses}
 \begin{itemize}
-    \item Medical imaging: Segment tumors or organs
-    \item Computer vision: Object detection via region growing
-    \item Game engines: Territory control, pathfinding
+    \item \textbf{Medical}: Tumor/organ segmentation
+    \item \textbf{AI Vision}: Region-growing object detection
+    \item \textbf{Games}: Territory control \& fog-of-war
 \end{itemize}
+
+\vspace{0.2cm}
+{\footnotesize \textcolor{gray}{Ref:} \href{https://en.wikipedia.org/wiki/Flood_fill}{\texttt{en.wikipedia.org/wiki/Flood\_fill}}}
 \end{frame}
-
-
 
 
 
