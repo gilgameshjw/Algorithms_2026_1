@@ -204,10 +204,6 @@ $\Leftrightarrow$ \\
 \textbf{
 Let's have a closer look at computation types of classes! 
 }
-\end{frame}
-
-
-\begin{frame}{Incomputability by Turing Machine}
 
 One can prove that {\bf infinitely many} functions:
 $$\mathcal{F}: \{0,1\}^* \to {0,1}$$ are \textcolor{new_turquoise}{\bf uncomputable} by a Turing Machine.
@@ -406,7 +402,10 @@ Coin & $P(\text{Heads})$ & $H(X)$ \\ \hline
 Fair         & 50\%  & \textbf{1.00 bit}  ← maximum uncertainty \\
 99\% heads   & 99\%  & $\approx 0.08$ bit ← boring \\
 1\% heads    & 1\%   & $\approx 6.6$ bits ← shocking when it lands!
-\end{tabular}
+\end{tabular} \\
+
+$$H(X)_{Fair} \approx 1.0 \quad VS \quad H(X)_{99\%} = 0.08!!! $$
+
 
 \vspace{.1cm}
 \large
@@ -444,7 +443,7 @@ For a source with entropy $H(X)$ bits/symbol:
 
 \vspace{0.2cm}
 \small
-Shannon Entropy  versus Cross entropy loss:
+Shannon Entropy  versus Cross entropy loss: \\
 $H(P)=\sum_i p_i \cdot \mathrm{log}(p_i)$ versus 
 $H(P, Q)=\sum_i p_i \cdot \mathrm{log}(q_i)$ 
 
